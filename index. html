@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FUTA Aggregate Calculator</title>
+  <style>
+    body { font-family: sans-serif; background: #f9f9f9; padding: 1rem; max-width: 600px; margin: auto; }
+    h1 { text-align: center; }
+    select, input { width: 100%; padding: 8px; margin-top: 5px; }
+    button { margin-top: 1rem; padding: 10px; width: 100%; background: #007acc; color: white; border: none; cursor: pointer; }
+    #result { margin-top: 1.5rem; font-size: 1.1rem; font-weight: bold; text-align: center; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>FUTA Aggregate Calculator</h1>
+
+  <label>UTME Score (out of 400):</label>
+  <input type="number" id="utme" min="0" max="400"/>
+
+  <label>Select 5 Core O'Level Grades:</label>
+  <div id="grades">
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+  </div>
+
+  <label>Select Department:</label>
+  <select id="dept">
+    <option value="">-- Choose Department --</option>
+    <optgroup label="Engineering & Technology">
+      <option value="69.62">Computer Engineering</option>
+      <option value="71.87">Civil & Environmental Engineering</option>
+      <option value="74.37">Electrical & Electronics Engineering</option>
+      <option value="73.75">Mechanical Engineering</option>
+      <option value="55.12">Agricultural & Environmental Engineering</option>
+      <option value="54.87">Metallurgical & Materials Engineering</option>
+      <option value="54.75">Mining Engineering</option>
+    </optgroup>
+    <optgroup label="Computing">
+      <option value="69.00">Computer Science</option>
+      <option value="63.75">Software Engineering</option>
+      <option value="63.75">Information Technology</option>
+      <option value="63.75">Information Systems</option>
+      <option value="63.75">Cyber Security</option>
+    </optgroup>
+    <optgroup label="Environmental Technology">
+      <option value="72.87">Architecture</option>
+      <option value="56.62">Building Technology</option>
+      <option value="53.25">Industrial Design</option>
+      <option value="57.00">Quantity Surveying</option>
+      <option value="64.25">Surveying & Geoinformatics</option>
+      <option value="52.87">Urban & Regional Planning</option>
+      <option value="47.50">Estate Management</option>
+    </optgroup>
+    <optgroup label="Sciences">
+      <option value="63.37">Biochemistry</option>
+      <option value="63.00">Microbiology</option>
+      <option value="59.00">Industrial Mathematics</option>
+      <option value="47.50">Chemistry</option>
+      <option value="47.50">Biology</option>
+      <option value="47.50">Physics</option>
+      <option value="47.50">Statistics</option>
+    </optgroup>
+    <optgroup label="Agriculture">
+      <option value="58.12">Food Science & Technology</option>
+      <option value="55.37">Animal Production & Health</option>
+      <<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FUTA Aggregate Calculator</title>
+  <style>
+    body { font-family: sans-serif; background: #f9f9f9; padding: 1rem; max-width: 600px; margin: auto; }
+    h1 { text-align: center; }
+    select, input { width: 100%; padding: 8px; margin-top: 5px; }
+    button { margin-top: 1rem; padding: 10px; width: 100%; background: #007acc; color: white; border: none; cursor: pointer; }
+    #result { margin-top: 1.5rem; font-size: 1.1rem; font-weight: bold; text-align: center; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>FUTA Aggregate Calculator</h1>
+
+  <label>UTME Score (out of 400):</label>
+  <input type="number" id="utme" min="0" max="400"/>
+
+  <label>Select 5 Core O'Level Grades:</label>
+  <div id="grades">
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+    <select class="grade"><option value="82">A1</option><option value="72">B2</option><option value="67">B3</option><option value="62">C4</option><option value="57">C5</option><option value="52">C6</option></select>
+  </div>
+
+  <label>Select Department:</label>
+  <select id="dept">
+    <option value="">-- Choose Department --</option>
+    <optgroup label="Engineering & Technology">
+      <option value="69.62">Computer Engineering</option>
+      <option value="71.87">Civil & Environmental Engineering</option>
+      <option value="74.37">Electrical & Electronics Engineering</option>
+      <option value="73.75">Mechanical Engineering</option>
+      <option value="55.12">Agricultural & Environmental Engineering</option>
+      <option value="54.87">Metallurgical & Materials Engineering</option>
+      <option value="54.75">Mining Engineering</option>
+    </optgroup>
+    <optgroup label="Computing">
+      <option value="69.00">Computer Science</option>
+      <option value="63.75">Software Engineering</option>
+      <option value="63.75">Information Technology</option>
+      <option value="63.75">Information Systems</option>
+      <option value="63.75">Cyber Security</option>
+    </optgroup>
+    <optgroup label="Environmental Technology">
+      <option value="72.87">Architecture</option>
+      <option value="56.62">Building Technology</option>
+      <option value="53.25">Industrial Design</option>
+      <option value="57.00">Quantity Surveying</option>
+      <option value="64.25">Surveying & Geoinformatics</option>
+      <option value="52.87">Urban & Regional Planning</option>
+      <option value="47.50">Estate Management</option>
+    </optgroup>
+    <optgroup label="Sciences">
+      <option value="63.37">Biochemistry</option>
+      <option value="63.00">Microbiology</option>
+      <option value="59.00">Industrial Mathematics</option>
+      <option value="47.50">Chemistry</option>
+      <option value="47.50">Biology</option>
+      <option value="47.50">Physics</option>
+      <option value="47.50">Statistics</option>
+    </optgroup>
+    <optgroup label="Agriculture">
+      <option value="58.12">Food Science & Technology</option>
+      <option value="55.37">Animal Production & Health</option>
+      <
