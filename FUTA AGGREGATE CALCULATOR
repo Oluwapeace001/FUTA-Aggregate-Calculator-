@@ -1,0 +1,360 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUTA Aggregate Score Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0b5ed7;
+    }
+    .result {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .cutoff-guide {
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>FUTA Aggregate Calculator</h2>
+    <label for="utme">UTME Score (out of 400):</label>
+    <input type="number" id="utme" min="0" max="400">
+
+    <label for="postUtme">Post-UTME Score (out of 100):</label>
+    <input type="number" id="postUtme" min="0" max="100">
+
+    <button onclick="calculateAggregate()">Calculate Aggregate</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="cutoff-guide">
+      <h3>Estimated Cut-off Aggregate by Course</h3>
+      <label for="filter">Search for a course:</label>
+      <input type="text" id="filter" onkeyup="filterCourses()" placeholder="e.g. Computer Science">
+      <table id="cutoffTable">
+        <thead>
+          <tr><th>Faculty</th><th>Course</th><th>Aggregate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Engineering</td><td>Computer Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Engineering</td><td>Electrical/Electronic Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Engineering</td><td>Mechanical Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Engineering</td><td>Civil Engineering</td><td>68% – 73%</td></tr>
+          <tr><td>Engineering</td><td>Metallurgical and Materials Engineering</td><td>60% – 65%</td></tr>
+          <tr><td>Engineering</td><td>Agricultural and Environmental Engineering</td><td>60% – 65%</td></tr>
+          <tr><td>Engineering</td><td>Mining Engineering</td><td>55% – 60%</td></tr>
+          <tr><td>Engineering</td><td>Mechatronics Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Computing</td><td>Computer Science</td><td>70% – 75%</td></tr>
+          <tr><td>Computing</td><td>Software Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Computing</td><td>Cyber Security</td><td>68% – 73%</td></tr>
+          <tr><td>Computing</td><td>Information Technology</td><td>68% – 72%</td></tr>
+          <tr><td>Sciences</td><td>Microbiology</td><td>65% – 70%</td></tr>
+          <tr><td>Sciences</td><td>Biochemistry</td><td>65% – 70%</td></tr>
+          <tr><td>Sciences</td><td>Industrial Chemistry</td><td>60% – 65%</td></tr>
+          <tr><td>Sciences</td><td>Biology</td><td>55% – 60%</td></tr>
+          <tr><td>Sciences</td><td>Mathematics</td><td>55% – 60%</td></tr>
+          <tr><td>Sciences</td><td>Statistics</td><td>55% – 60%</td></tr>
+          <tr><td>Sciences</td><td>Physics</td><td>55% – 60%</td></tr>
+          <tr><td>Agriculture</td><td>Agricultural Extension & Communication</td><td>50% – 60%</td></tr>
+          <tr><td>Agriculture</td><td>Crop, Soil & Pest Management</td><td>50% – 60%</td></tr>
+          <tr><td>Agriculture</td><td>Animal Production & Health</td><td>55% – 65%</td></tr>
+          <tr><td>Agriculture</td><td>Fisheries & Aquaculture Technology</td><td>50% – 60%</td></tr>
+          <tr><td>Earth Sciences</td><td>Applied Geophysics</td><td>55% – 60%</td></tr>
+          <tr><td>Earth Sciences</td><td>Applied Geology</td><td>55% – 60%</td></tr>
+          <tr><td>Earth Sciences</td><td>Remote Sensing & GIS</td><td>60% – 65%</td></tr>
+          <tr><td>Earth Sciences</td><td>Marine Science and Technology</td><td>55% – 60%</td></tr>
+          <tr><td>Environmental</td><td>Architecture</td><td>65% – 70%</td></tr>
+          <tr><td>Environmental</td><td>Building Technology</td><td>60% – 65%</td></tr>
+          <tr><td>Environmental</td><td>Estate Management</td><td>60% – 65%</td></tr>
+          <tr><td>Environmental</td><td>Urban & Regional Planning</td><td>55% – 60%</td></tr>
+          <tr><td>Environmental</td><td>Quantity Surveying</td><td>60% – 65%</td></tr>
+          <tr><td>Health</td><td>Anatomy</td><td>70%+</td></tr>
+          <tr><td>Health</td><td>Biomedical Technology</td><td>65% – 70%</td></tr>
+          <tr><td>Management</td><td>Project Management Technology</td><td>60% – 65%</td></tr>
+          <tr><td>Management</td><td>Transport Management Technology</td><td>60% – 65%</td></tr>
+          <tr><td>Management</td><td>Entrepreneurship</td><td>60% – 65%</td></tr>
+          <tr><td>Management</td><td>Industrial & Production Engineering</td><td>60% – 65%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function calculateAggregate() {
+      const utme = parseFloat(document.getElementById("utme").value);
+      const postUtme = parseFloat(document.getElementById("postUtme").value);
+
+      if (isNaN(utme) || isNaN(postUtme)) {
+        document.getElementById("result").textContent = "Please enter both scores.";
+        return;
+      }
+
+      if (utme < 0 || utme > 400 || postUtme < 0 || postUtme > 100) {
+        document.getElementById("result").textContent = "Scores must be within valid ranges.";
+        return;
+      }
+
+      const aggregate = (utme / 8) + (postUtme / 2);
+      document.getElementById("result").textContent = `Your Aggregate Score is: ${aggregate.toFixed(2)}%`;
+    }
+
+    function filterCourses() {
+      const input = document.getElementById("filter");
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById("cutoffTable");
+      const rows = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        const course = cells[1]?.textContent.toLowerCase() || "";
+        if (course.includes(filter)) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUTA Aggregate Score Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0b5ed7;
+    }
+    .result {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .cutoff-guide {
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>FUTA Aggregate Calculator</h2>
+    <label for="utme">UTME Score (out of 400):</label>
+    <input type="number" id="utme" min="0" max="400">
+
+    <label for="postUtme">Post-UTME Score (out of 100):</label>
+    <input type="number" id="postUtme" min="0" max="100">
+
+    <button onclick="calculateAggregate()">Calculate Aggregate</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="cutoff-guide">
+      <h3>Estimated Cut-off Aggregate by Course</h3>
+      <label for="filter">Search for a course:</label>
+      <input type="text" id="filter" onkeyup="filterCourses()" placeholder="e.g. Computer Science">
+      <table id="cutoffTable">
+        <thead>
+          <tr><th>Faculty</th><th>Course</th><th>Aggregate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Engineering</td><td>Computer Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Engineering</td><td>Electrical/Electronic Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Engineering</td><td>Mechanical Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Engineering</td><td>Civil Engineering</td><td>68% – 73%</td></tr>
+          <tr><td>Engineering</td><td>Metallurgical and Materials Engineering</td><td>60% – 65%</td></tr>
+          <tr><td>Engineering</td><td>Agricultural and Environmental Engineering</td><td>60% – 65%</td></tr>
+          <tr><td>Engineering</td><td>Mining Engineering</td><td>55% – 60%</td></tr>
+          <tr><td>Engineering</td><td>Mechatronics Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Computing</td><td>Computer Science</td><td>70% – 75%</td></tr>
+          <tr><td>Computing</td><td>Software Engineering</td><td>70% – 75%</td></tr>
+          <tr><td>Computing</td><td>Cyber Security</td><td>68% – 73%</td></tr>
+          <tr><td>Computing</td><td>Information Technology</td><td>68% – 72%</td></tr>
+          <tr><td>Sciences</td><td>Microbiology</td><td>65% – 70%</td></tr>
+          <tr><td>Sciences</td><td>Biochemistry</td><td>65% – 70%</td></tr>
+          <tr><td>Sciences</td><td>Industrial Chemistry</td><td>60% – 65%</td></tr>
+          <tr><td>Sciences</td><td>Biology</td><td>55% – 60%</td></tr>
+          <tr><td>Sciences</td><td>Mathematics</td><td>55% – 60%</td></tr>
+          <tr><td>Sciences</td><td>Statistics</td><td>55% – 60%</td></tr>
+          <tr><td>Sciences</td><td>Physics</td><td>55% – 60%</td></tr>
+          <tr><td>Agriculture</td><td>Agricultural Extension & Communication</td><td>50% – 60%</td></tr>
+          <tr><td>Agriculture</td><td>Crop, Soil & Pest Management</td><td>50% – 60%</td></tr>
+          <tr><td>Agriculture</td><td>Animal Production & Health</td><td>55% – 65%</td></tr>
+          <tr><td>Agriculture</td><td>Fisheries & Aquaculture Technology</td><td>50% – 60%</td></tr>
+          <tr><td>Earth Sciences</td><td>Applied Geophysics</td><td>55% – 60%</td></tr>
+          <tr><td>Earth Sciences</td><td>Applied Geology</td><td>55% – 60%</td></tr>
+          <tr><td>Earth Sciences</td><td>Remote Sensing & GIS</td><td>60% – 65%</td></tr>
+          <tr><td>Earth Sciences</td><td>Marine Science and Technology</td><td>55% – 60%</td></tr>
+          <tr><td>Environmental</td><td>Architecture</td><td>65% – 70%</td></tr>
+          <tr><td>Environmental</td><td>Building Technology</td><td>60% – 65%</td></tr>
+          <tr><td>Environmental</td><td>Estate Management</td><td>60% – 65%</td></tr>
+          <tr><td>Environmental</td><td>Urban & Regional Planning</td><td>55% – 60%</td></tr>
+          <tr><td>Environmental</td><td>Quantity Surveying</td><td>60% – 65%</td></tr>
+          <tr><td>Health</td><td>Anatomy</td><td>70%+</td></tr>
+          <tr><td>Health</td><td>Biomedical Technology</td><td>65% – 70%</td></tr>
+          <tr><td>Management</td><td>Project Management Technology</td><td>60% – 65%</td></tr>
+          <tr><td>Management</td><td>Transport Management Technology</td><td>60% – 65%</td></tr>
+          <tr><td>Management</td><td>Entrepreneurship</td><td>60% – 65%</td></tr>
+          <tr><td>Management</td><td>Industrial & Production Engineering</td><td>60% – 65%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function calculateAggregate() {
+      const utme = parseFloat(document.getElementById("utme").value);
+      const postUtme = parseFloat(document.getElementById("postUtme").value);
+
+      if (isNaN(utme) || isNaN(postUtme)) {
+        document.getElementById("result").textContent = "Please enter both scores.";
+        return;
+      }
+
+      if (utme < 0 || utme > 400 || postUtme < 0 || postUtme > 100) {
+        document.getElementById("result").textContent = "Scores must be within valid ranges.";
+        return;
+      }
+
+      const aggregate = (utme / 8) + (postUtme / 2);
+      document.getElementById("result").textContent = `Your Aggregate Score is: ${aggregate.toFixed(2)}%`;
+    }
+
+    function filterCourses() {
+      const input = document.getElementById("filter");
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById("cutoffTable");
+      const rows = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        const course = cells[1]?.textContent.toLowerCase() || "";
+        if (course.includes(filter)) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
