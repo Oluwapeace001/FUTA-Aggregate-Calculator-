@@ -1,0 +1,124 @@
+<FUTA AGGREGATE CALCULATOR html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FUTA Aggregate Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2b2e4a;
+    }
+
+    .calculator {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .valid { background-color: #d4edda; color: #155724; }
+    .borderline { background-color: #fff3cd; color: #856404; }
+    .invalid { background-color: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+
+  <h1>FUTA Aggregate Calculator</h1>
+
+  <div class="calculator">
+    <label for="utme">UTME Score (out of 400):</label>
+    <input type="number" id="utme" min="0" max="400" placeholder="Enter UTME score">
+
+    <label for="postutme">Post-UTME Score (out of 100):</label>
+    <input type="number" id="postutme" min="0" max="100" placeholder="Enter Post-UTME score">
+
+    <button onclick="calculateAggregate()">Calculate Aggregate</button>
+
+    <div id="output" class="result"></div>
+  </div>
+
+  <script>
+    function calculateAggregate() {
+      const utme = parseFloat(document.getElementById("utme").value);
+      const postUtme = parseFloat(document.getElementById("postutme").value);
+      const output = document.getElementById("output");
+
+      // Validation
+      if (isNaN(utme) || isNaN(postUtme) || utme < 0 || utme > 400 || postUtme < 0 || postUtme > 100) {
+        output.textContent = "Please enter valid scores within range!";
+        output.className = "result invalid";
+        return;
+      }
+
+      const aggregate = (utme / 8) + (postUtme / 2);
+      const rounded = aggregate.toFixed(2);
+
+      let statusClass = "valid";
+      let message = `Your FUTA Aggregate Score is ${rounded}%`;
+
+      if (aggregate < 60) {
+        statusClass = "invalid";
+        message += " (Below competitive cutoff)";
+      } else if (aggregate < 70) {
+        statusClass = "borderline";
+        message += " (Moderate chance)";
+      } else {
+        statusClass = "valid";
+        message += " (Good chance)";
+      }
+
+      output.textContent = message;
+      output.className = `result ${statusClass}`;
+    }
+  </script>
+
+</body>
+</html>
