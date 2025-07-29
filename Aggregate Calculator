@@ -1,0 +1,71 @@
+<script>
+  const departments = [ /* same full department array as earlier */ ];
+
+  let userAggregate = null;
+
+  function calculateAggregate() {
+    const utme = parseFloat(document.getElementById("utme").value);
+    const postutme = parseFloat(document.getElementById("postutme").value);
+    const resultDiv = document.getElementById("result");
+
+    if (isNaN(utme) || isNaN(postutme) || utme < 0 || postutme < 0 || utme > 400 || postutme > 100) {
+      resultDiv.innerText = "Please enter valid UTME (0–400) and Post-UTME (0–100) scores.";
+      return;
+    }
+
+    userAggregate = (utme / 8) + (postutme / 2);
+    resultDiv.innerText = `Your aggregate score is: ${userAggregate.toFixed(2)}`;
+
+    populateCutOffs(); // Refresh table with highlight
+  }
+
+  function populateCutOffs() {
+    const tableBody = document.getElementById("cutoffData");
+    tableBody.innerHTML = ""; // Clear old data
+
+    const grouped = {};
+    departments.forEach(d => {
+      if (!grouped[d.school]) grouped[d.school] = [];
+      grouped[d.school].push(d);
+    });
+
+    for (const school in grouped) {
+      const headingRow = document.createElement("tr");
+      headingRow.innerHTML = `<td colspan="3" class="school-heading">${school}</td>`;
+      tableBody.appendChild(headingRow);
+
+      grouped[school].forEach(d => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${d.school}</td>
+          <td>${d.dept}</td>
+          <td>${d.cutoff}</td>
+        `;
+
+        // Highlight based on user aggregate
+        if (userAggregate !== null) {
+          if (userAggregate >= d.cutoff) {
+            row.style.backgroundColor = "#d4edda"; // green for passed
+          } else {
+            row.style.opacity = "0.5"; // faded if not qualified
+          }
+        }
+
+        tableBody.appendChild(row);
+      });
+    }
+  }
+
+  function filterTable() {
+    const input = document.getElementById("search").value.toLowerCase();
+    const rows = document.querySelectorAll("#cutoffData tr");
+
+    rows.forEach(row => {
+      if (row.classList.contains("school-heading")) return; // always show school headings
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(input) ? "" : "none";
+    });
+  }
+
+  window.onload = populateCutOffs;
+</script>
